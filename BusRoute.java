@@ -17,6 +17,9 @@ public class BusRoute {
     public String getName(){ return name; }
     public BusStop getStart(){ return start; }
 
+
+    //adds a new BusStop with the given name to the end of the route (that is, just before the route circles back to start)
+
     public void addStop(String name) {
         BusStop newStop = new BusStop(name, this.name, null, null);
         if (start == null) {
@@ -32,6 +35,9 @@ public class BusRoute {
         start.setPrevious(newStop);
     }
 
+    
+    //adds a new BusStop with the given name to the route just after the stop with the given name prevStop;
+    // if the given previous stop is not in the route the new stop is not added
     public void addStop(String name, String prevStop) {
         if (start == null) return;
         BusStop current = start;
@@ -46,7 +52,8 @@ public class BusRoute {
             current = current.getNext();
         } while (current != start);
     }
-
+    
+//removes from the route the BusStop with the given name;
     public BusStop removeStop(String name) {
         if (start == null) return null;
         BusStop current = start;
@@ -63,9 +70,9 @@ public class BusRoute {
             }
             current = current.getNext();
         } while (current != start);
-        return null;
+        return null; //  returns null if the route is empty or the given stop does not exist in the route
     }
-
+// returns the BusStop immediately following the BusStop with the given name;
     public BusStop getNextStop(String stopName) {
         if (start == null) return null;
         BusStop current = start;
@@ -73,18 +80,23 @@ public class BusRoute {
             if (current.getName().equals(stopName)) return current.getNext();
             current = current.getNext();
         } while (current != start);
-        return null;
+        return null;  // returns null if the route is empty or the given stop does not exist in the route
     }
 
+    
     public boolean stopsAt(String stopName) {
-        if (start == null) return false;
+        if (start == null) return false; // returns false if the route is empty or the route does not stop there
         BusStop current = start;
         do {
-            if (current.getName().equals(stopName)) return true;
+            if (current.getName().equals(stopName)) return true; // returns true if the route stops at the BusStop with the given name; 
             current = current.getNext();
         } while (current != start);
-        return false;
+        return false; 
     }
+
+    //returns an ArrayList of the names of the stops that the calling object and given otherRoute have in common,
+//i.e. stops where someone could transfer routes; returns an empty ArrayList if either route is
+//empty or the routes have no stops in common.
 
     public ArrayList<String> getTransferPoints(BusRoute otherRoute) {
         ArrayList<String> shared = new ArrayList<>();
