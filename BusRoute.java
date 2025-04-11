@@ -5,21 +5,23 @@ CODE WRITTEN BY OTHER STUDENTS OR COPIED FROM ONLINE RESOURCES. Philip Cardozo
 
 import java.util.ArrayList;
 
+// a class for a circular, doubly-linked list representing a bus route
 public class BusRoute {
-    private final String name;
-    private BusStop start;
+    private final String name; // name of the route
+    private BusStop start; // starting bus stop (head of the linked list)
 
     public BusRoute(String name){
         this.name = name;
         start = null;
     }
 
+    // return route name
     public String getName(){ return name; }
+
+    // return starting bus stop
     public BusStop getStart(){ return start; }
 
-
-    //adds a new BusStop with the given name to the end of the route (that is, just before the route circles back to start)
-
+    // adds a new BusStop with the given name to the end of the route (that is, just before the route circles back to start)
     public void addStop(String name) {
         BusStop newStop = new BusStop(name, this.name, null, null);
         if (start == null) {
@@ -35,8 +37,7 @@ public class BusRoute {
         start.setPrevious(newStop);
     }
 
-    
-    //adds a new BusStop with the given name to the route just after the stop with the given name prevStop;
+    // adds a new BusStop with the given name to the route just after the stop with the given name prevStop;
     // if the given previous stop is not in the route the new stop is not added
     public void addStop(String name, String prevStop) {
         if (start == null) return;
@@ -52,8 +53,9 @@ public class BusRoute {
             current = current.getNext();
         } while (current != start);
     }
-    
-//removes from the route the BusStop with the given name;
+
+    // removes from the route the BusStop with the given name;
+    // returns null if the route is empty or the given stop does not exist in the route
     public BusStop removeStop(String name) {
         if (start == null) return null;
         BusStop current = start;
@@ -70,9 +72,11 @@ public class BusRoute {
             }
             current = current.getNext();
         } while (current != start);
-        return null; //  returns null if the route is empty or the given stop does not exist in the route
+        return null;
     }
-// returns the BusStop immediately following the BusStop with the given name;
+
+    // returns the BusStop immediately following the BusStop with the given name;
+    // returns null if the route is empty or the given stop does not exist in the route
     public BusStop getNextStop(String stopName) {
         if (start == null) return null;
         BusStop current = start;
@@ -80,24 +84,24 @@ public class BusRoute {
             if (current.getName().equals(stopName)) return current.getNext();
             current = current.getNext();
         } while (current != start);
-        return null;  // returns null if the route is empty or the given stop does not exist in the route
+        return null;
     }
 
-    
+    // returns true if the route stops at the BusStop with the given name; 
+    // returns false if the route is empty or the route does not stop there
     public boolean stopsAt(String stopName) {
-        if (start == null) return false; // returns false if the route is empty or the route does not stop there
+        if (start == null) return false;
         BusStop current = start;
         do {
-            if (current.getName().equals(stopName)) return true; // returns true if the route stops at the BusStop with the given name; 
+            if (current.getName().equals(stopName)) return true;
             current = current.getNext();
         } while (current != start);
-        return false; 
+        return false;
     }
 
-    //returns an ArrayList of the names of the stops that the calling object and given otherRoute have in common,
-//i.e. stops where someone could transfer routes; returns an empty ArrayList if either route is
-//empty or the routes have no stops in common.
-
+    // returns an ArrayList of the names of the stops that the calling object and given otherRoute have in common,
+    // i.e. stops where someone could transfer routes; returns an empty ArrayList if either route is
+    // empty or the routes have no stops in common
     public ArrayList<String> getTransferPoints(BusRoute otherRoute) {
         ArrayList<String> shared = new ArrayList<>();
         if (this.start == null || otherRoute.start == null) return shared;
@@ -111,11 +115,14 @@ public class BusRoute {
         return shared;
     }
 
+    // represents route using name of the route
+    // overrides to give that this is a Bus Route along with the name of the route
     @Override
     public String toString() {
         return "Bus Route " + name;
     }
 
+    // displays the route (forwards) from start to the last stop before start again
     public void displayRoute(){
         String res = "";
         if(start == null){
@@ -130,7 +137,8 @@ public class BusRoute {
         }
         System.out.println(res);
     }
-// Displays the route backwards from the stop *before start* back to start ... → 3rd → 2nd → 1st → start
+
+    // Displays the route backwards from the stop *before start* back to start ... → 3rd → 2nd → 1st → start
     public void displayRouteBackwards(){
         String res = "";
         if(start == null){
