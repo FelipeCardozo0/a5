@@ -3,15 +3,18 @@ THIS CODE WAS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTING
 CODE WRITTEN BY OTHER STUDENTS OR COPIED FROM ONLINE RESOURCES. Philip Cardozo
 */
 
+// class representing a user trip as a doubly-linked list
 public class Trip {
-    private BusStop start;
+    private BusStop start; // starting stop of the trip
 
     public Trip(){
         this.start = null;
     }
 
+    // returns the start of the trip
     public BusStop getStart(){ return start; }
 
+    // adds the stop with given name on the given route to the end of the existing trip
     public void addStop(String stopName, String routeName) {
         BusStop newStop = new BusStop(stopName, routeName, null, null);
         if (start == null) {
@@ -24,6 +27,8 @@ public class Trip {
         newStop.setPrevious(curr);
     }
 
+    // removes from the trip the stop with given name on the given route;  
+    // returns null if the route is empty or the given stop on the given route does not exist in the trip
     public BusStop removeStop(String stopName, String routeName) {
         if (start == null) return null;
         BusStop curr = start;
@@ -39,6 +44,7 @@ public class Trip {
         return null;
     }
 
+    // prints to System.out the sequence of stops in the trip, beginning at start
     public void displayTrip(){
         String res = "";
         if(start == null){
@@ -54,6 +60,7 @@ public class Trip {
         System.out.println(res);
     }
 
+    // prints the sequence of stops in the trip but in reverse order, beginning at the last stop and ending at start
     public void displayTripBackwards(){
         String res = "";
         if(start == null){
