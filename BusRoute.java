@@ -130,7 +130,7 @@ public class BusRoute {
         }
         System.out.println(res);
     }
-
+// Displays the route backwards from the stop *before start* back to start ... → 3rd → 2nd → 1st → start
     public void displayRouteBackwards(){
         String res = "";
         if(start == null){
